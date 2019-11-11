@@ -44,14 +44,15 @@ public class Trie {
 
         for (int index = 0; index < length; index++) {
             char newLead = newWord.charAt(index);
-            TrieNode currentNode = current.firstChild;
-            if (currentNode == null) {
-                currentNode = new TrieNode(newLead, newWord, true);
+
+            if (current.firstChild == null) {
+                current.firstChild = new TrieNode(newLead, newWord, true);
                 break;
             }
-
-            while (currentNode.rightSibling != null && currentNode.rightSibling.lead < newLead) {
+            TrieNode currentNode = current.firstChild;
+            while (currentNode.rightSibling != null && currentNode.lead < newLead) {
                 currentNode = currentNode.rightSibling;
+
             }
             if (currentNode.lead < newLead) {
                 TrieNode temp = new TrieNode(newLead, newWord, true);
@@ -70,14 +71,40 @@ public class Trie {
                 }
 
                 // Split label at i and form two nodes.
-                if (i == labelAsArray.length - 1 && labelAsArray.length == wordAsArray.length) {
-                    return;
+                if (i == labelAsArray.length && labelAsArray.length == wordAsArray.length) {
+                    break;
                 }
                 else {
                     String label1 = currentNode.label.substring(0,i);
                     String label2 = currentNode.label.substring(i);
-                    TrieNode nodeForFirstSplit1 = new TrieNode(label1.charAt(0), label1, true);
-                    TrieNode nodeForFirstSplit2 = new TrieNode(label2.charAt(0), label2, true);
+                    String newLabel = newWord.substring(i);
+                    currentNode.label = label1;
+                    currentNode.lead = label1.charAt(0);
+                    currentNode.isWord = true;
+
+                    if (label2.length() != 0 && newLabel.length() != 0) {
+                        TrieNode nodeForOriginalNode = new TrieNode(label2.charAt(0), label2, true);
+                        TrieNode nodeForSecondaryNode = new TrieNode(newLabel.charAt(0), newLabel,true);
+
+                        if (nodeForOriginalNode.lead < nodeForSecondaryNode.lead) {
+                            currentNode.firstChild = nodeForOriginalNode;
+                            nodeForOriginalNode.rightSibling = nodeForSecondaryNode;
+                        }
+                        else {
+                            currentNode.firstChild = nodeForSecondaryNode;
+                            nodeForSecondaryNode.rightSibling = nodeForOriginalNode;
+                        }
+                    }
+                    else if (label2.length() != 0) {
+                        TrieNode nodeForOriginalNode = new TrieNode(label2.charAt(0), label2, true);
+                        currentNode.firstChild = nodeForOriginalNode;
+                    }
+                    else {
+                        TrieNode nodeForSecondaryNode = new TrieNode(newLabel.charAt(0), newLabel,true);
+                        currentNode.firstChild = nodeForSecondaryNode;
+                    }
+
+                    break;
                 }
 
             }
@@ -91,6 +118,13 @@ public class Trie {
                     TrieNode newFirstNode = new TrieNode(newLead, newWord, true);
                     newFirstNode.rightSibling = current.firstChild;
                     current.firstChild = newFirstNode;
+                    break;
+                }
+                else {
+                    TrieNode newNode = new TrieNode(newLead, newWord, true);
+                    newNode.rightSibling = temp.rightSibling;
+                    temp.rightSibling = newNode;
+                    break;
                 }
             }
         }

@@ -9,7 +9,7 @@ package trie;
 //        node a pre-order id after running pre-order on the constructed trie. When you compare the
 //        performance, you’ll use 1000 word queries.
 
-public class trieHash {
+public class TrieHash {
     private class Tuple {
 
     }
