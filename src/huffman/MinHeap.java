@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MinHeap {
-    private int[] Heap;     //array representation of the minHeap
+    private Pair[] Heap;     //array representation of the minHeap
     private int size;       //number of current elements in the heap
     private int maxsize;    //maximum number of elements the heap can hold
     private int k;          //maximum number of children each parent element can hold
@@ -16,11 +16,11 @@ public class MinHeap {
     public MinHeap(int maxsize, int k) {
         this.maxsize = maxsize;
         this.size = 0;
-        Heap = new int[this.maxsize];
+        Heap = new Pair[this.maxsize];
         this.k = k;
     }
 
-    //returns the parent element of the element in the given index pos
+    //returns the index of the parent element of the element in the given index pos
     private int parent(int pos) {
         return pos/k;
     }
@@ -98,8 +98,8 @@ public class MinHeap {
     //Method that returns the key of the minimum value
     //of the heap and restores the heap property
     //of the remaining nodes
-    public int extractMin() {
-        int popped = Heap[0];
+    public Pair extractMin() {
+        Pair popped = Heap[0];
         Heap[0] = Heap[--size];
         minHeapify(0);
         return popped;

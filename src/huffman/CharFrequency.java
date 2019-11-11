@@ -7,6 +7,7 @@ import java.util.Map;
  * make pairs for each frequency and character in MinHeap so MinHeap is by frequency w/ characters connected
  * figure out messy main method here vvv
  * finish huffman algorithm in HuffmanEncoding class: from Shah ppt 13 last 2 slides
+ * maybe make a MinHeap array of Pairs?
  */
 
 public class CharFrequency {
