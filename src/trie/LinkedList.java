@@ -1,6 +1,6 @@
 package trie;
 
-public class CharLinkedList {
+public class LinkedList {
     public static class Node {
         private Node next;
 
@@ -31,7 +31,7 @@ public class CharLinkedList {
     
     public Node first;
 
-    public CharLinkedList() {
+    public LinkedList() {
         first = null;
     }
 

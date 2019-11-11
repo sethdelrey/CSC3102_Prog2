@@ -1,58 +1,111 @@
 package trie;
 
 public class Trie {
-    TrieNode root;
-
     private class TrieNode {
-        CharLinkedList children;
-        char letter;
+        char lead;
+        String label;
+        boolean isWord;
 
-        TrieNode(char _letter) {
-            letter = _letter;
-            children = new CharLinkedList();
+        TrieNode rightSibling;
+        TrieNode firstChild;
+
+        public TrieNode(char lead, String label, boolean isWord) {
+            this.lead = lead;
+            this.label = label;
+            this.isWord = isWord;
+        }
+
+        public TrieNode FindChild(char c) {
+            if (firstChild == null) {
+                return null;
+            }
+            else {
+                TrieNode iterator = firstChild;
+                while (iterator.rightSibling != null && iterator.lead != c) {
+                    iterator = iterator.rightSibling;
+                }
+
+                return iterator;
+            }
         }
     }
 
+    private TrieNode root;
+
     public Trie() {
-        root = new TrieNode(' ');
+        root = new TrieNode(' ', null, false);
     }
 
-    public void insert(String word) {
-        word = word.toLowerCase();
-        int len = word.length();
-        TrieNode current = root;
+    public void insert(String newWord) {
+        newWord = newWord.toLowerCase();
 
-        for (int index = 0; index < len; index++) {
-            char letter = word.charAt(index);
-            if (current.children.first == null) {
-                current.children.first = new CharLinkedList.Node(new TrieNode(letter));
-                current = (TrieNode) current.children.first.getData();
-                continue;
+        TrieNode current = root;
+        int length = newWord.length();
+
+        for (int index = 0; index < length; index++) {
+            char newLead = newWord.charAt(index);
+            TrieNode currentNode = current.firstChild;
+            if (currentNode == null) {
+                currentNode = new TrieNode(newLead, newWord, true);
+                break;
             }
-            CharLinkedList.Node currentNode = current.children.first;
-            while (currentNode.hasNext() && ((TrieNode) currentNode.getData()).letter < letter) {
-                currentNode = currentNode.getNext();
+
+            while (currentNode.rightSibling != null && currentNode.rightSibling.lead < newLead) {
+                currentNode = currentNode.rightSibling;
             }
-            if (((TrieNode) currentNode.getData()).letter < letter) {
-                currentNode.add(new TrieNode(letter));
-                current = ((TrieNode) currentNode.getNext().getData());
-            } else if (((TrieNode) currentNode.getData()).letter == letter) {
-                current = (TrieNode) currentNode.getData();
-            } else {
-                CharLinkedList.Node temp = current.children.first;
-                while (temp.hasNext() && ((TrieNode) temp.getNext().getData()).letter < ((TrieNode) currentNode.getData()).letter) {
-                    temp = temp.getNext();
+            if (currentNode.lead < newLead) {
+                TrieNode temp = new TrieNode(newLead, newWord, true);
+                temp.rightSibling = currentNode.rightSibling;
+                currentNode.rightSibling = temp;
+                current = temp;
+            }
+            else if (currentNode.lead == newLead) {
+                char[] wordAsArray = newWord.toCharArray();
+                char[] labelAsArray = currentNode.label.toCharArray();
+                int i;
+                for (i = 0; i < labelAsArray.length; i++) {
+                    if (wordAsArray[i] != labelAsArray[i]) {
+                        break;
+                    }
                 }
-                // CurrentNode is first node
-                if (currentNode == current.children.first) {
-                    current.children.addFirst(new TrieNode(letter));
-                    current = (TrieNode) current.children.first.getData();
+
+                // Split label at i and form two nodes.
+                if (i == labelAsArray.length - 1 && labelAsArray.length == wordAsArray.length) {
+                    return;
                 }
                 else {
-                    temp.add(new TrieNode(letter));
-                    current = (TrieNode) temp.getNext().getData();
+                    String label1 = currentNode.label.substring(0,i);
+                    String label2 = currentNode.label.substring(i);
+                    TrieNode nodeForFirstSplit1 = new TrieNode(label1.charAt(0), label1, true);
+                    TrieNode nodeForFirstSplit2 = new TrieNode(label2.charAt(0), label2, true);
+                }
+
+            }
+            else {
+                TrieNode temp = current.firstChild;
+                while (temp.rightSibling != null && temp.rightSibling.lead < currentNode.lead) {
+                    temp = temp.rightSibling;
+                }
+
+                if (currentNode == current.firstChild) {
+                    TrieNode newFirstNode = new TrieNode(newLead, newWord, true);
+                    newFirstNode.rightSibling = current.firstChild;
+                    current.firstChild = newFirstNode;
                 }
             }
+        }
+    }
+
+    public TrieNode find(String newWord) {
+        TrieNode loc = root.FindChild(newWord.charAt(0));
+        if (loc == null) {
+            return root;
+        }
+        else if (loc.label.equals(newWord)) {
+            return loc;
+        }
+        else {
+            return null;
         }
     }
 }

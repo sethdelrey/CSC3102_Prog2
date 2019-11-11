@@ -9,5 +9,7 @@ public class TrieDriverClass {
         trie.insert("thomas");
         trie.insert("good");
         trie.insert("healthy");
+        trie.insert("stock");
+        trie.insert("stocks");
     }
 }
