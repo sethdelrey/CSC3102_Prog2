@@ -2,6 +2,13 @@ package huffman;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * to do:
+ * make pairs for each frequency and character in MinHeap so MinHeap is by frequency w/ characters connected
+ * figure out messy main method here vvv
+ * finish huffman algorithm in HuffmanEncoding class: from Shah ppt 13 last 2 slides
+ */
+
 public class CharFrequency {
 
     HashMap<Character, Integer> charCountMap = new HashMap<Character, Integer>();
