@@ -1,11 +1,15 @@
 package huffman;
 
+import javafx.util.Pair;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MinHeap {
     private int[] Heap;     //array representation of the minHeap
     private int size;       //number of current elements in the heap
     private int maxsize;    //maximum number of elements the heap can hold
     private int k;          //maximum number of children each parent element can hold
-
 
     //constructor for k-ary MinHeap with given maxsize
     //and given k
@@ -77,11 +81,12 @@ public class MinHeap {
 
     //Method to insert a value in the heap
     //Parameter x is the key of the element
-    public void insert(int x) {
+    public void insert(int x, char y) {
         if (size >= maxsize) {
             return;
         }
         Heap[size] = x;
+        Pair<Integer, Character> pair = new Pair<Integer, Character>(x, y);
         int curr = size;
         size++;
         while (Heap[curr] < Heap[parent(curr)]) {
