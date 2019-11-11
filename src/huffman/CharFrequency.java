@@ -3,8 +3,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CharFrequency {
-    public static void charCount(String inputString) {
-        HashMap<Character, Integer> charCountMap = new HashMap<Character, Integer>();
+
+    HashMap<Character, Integer> charCountMap = new HashMap<Character, Integer>();
+
+
+    public void charCount(String inputString) {
 
         inputString = inputString.replaceAll("[^a-zA-Z0-9_-]", "").toLowerCase();
         char[] strArray = inputString.toCharArray();
@@ -19,6 +22,24 @@ public class CharFrequency {
 
         for (Map.Entry entry : charCountMap.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+    }
+
+    public int getFrequency(char entry) {
+        for (Map.Entry<Character, Integer> c : charCountMap.entrySet()) {
+            if (entry == c.getKey())
+                return c.getValue();
+        }
+        return 0;
+    }
+
+    public char huffmanAlgorithm(String x) {
+        CharFrequency t = new CharFrequency();
+        int n = x.length();
+        int count = charCount(x);
+        Heap = new char[n];
+        for (Map.Entry<Character, Integer> c : charCountMap.entrySet()) {
+
         }
     }
 
