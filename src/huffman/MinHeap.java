@@ -5,7 +5,7 @@ public class MinHeap {
     private int size;       //number of current elements in the heap
     private int maxsize;    //maximum number of elements the heap can hold
     private int k;          //maximum number of children each parent element can hold
-    
+
 
     //constructor for k-ary MinHeap with given maxsize
     //and given k

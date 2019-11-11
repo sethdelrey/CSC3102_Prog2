@@ -33,15 +33,6 @@ public class CharFrequency {
         return 0;
     }
 
-    public char huffmanAlgorithm(String x) {
-        CharFrequency t = new CharFrequency();
-        int n = x.length();
-        int count = charCount(x);
-        Heap = new char[n];
-        for (Map.Entry<Character, Integer> c : charCountMap.entrySet()) {
-
-        }
-    }
 
     public static void main(String[] args) {
         String str = "Ajit hey. tAAheare";
