@@ -8,10 +8,9 @@ public class HuffmanEncoding {
     public char huffmanAlgorithm(char[] x) {
         CharFrequency t = new CharFrequency();
         int n = x.length;
-        //int count = charCount(x);
-        Heap = new char[n];
+        MaxHeap A = new MaxHeap(n, 2);
         for (char c : x) {
-            Heap.insert()
+            A.insert
         }
 
     }
