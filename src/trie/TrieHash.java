@@ -9,8 +9,25 @@ package trie;
 //        node a pre-order id after running pre-order on the constructed trie. When you compare the
 //        performance, you’ll use 1000 word queries.
 
-public class TrieHash {
-    private class Tuple {
+import java.util.Hashtable;
 
+public class TrieHash {
+    public static HashEntryNode[] hashTable;
+    public static int[] rat;
+
+    private static class HashEntryNode {
+        HashEntryNode parent;
+        HashEntryNode child;
+        char c;
+        HashEntryNode next;
+
+        public HashEntryNode findChild(char c) {
+            return null;
+        }
     }
+
+    public TrieHash(int size) {
+        hashTable = new HashEntryNode[size];
+    }
+
 }

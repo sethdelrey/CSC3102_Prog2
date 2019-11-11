@@ -130,16 +130,16 @@ public class Trie {
         }
     }
 
-    public TrieNode find(String newWord) {
-        TrieNode loc = root.FindChild(newWord.charAt(0));
-        if (loc == null) {
-            return root;
-        }
-        else if (loc.label.equals(newWord)) {
-            return loc;
-        }
-        else {
-            return null;
-        }
-    }
+//    public TrieNode find(String newWord) {
+//        TrieNode loc = root.FindChild(newWord.charAt(0));
+//        if (loc == null) {
+//            return root;
+//        }
+//        else if (loc.label.equals(newWord)) {
+//            return loc;
+//        }
+//        else {
+//            return null;
+//        }
+//    }
 }
