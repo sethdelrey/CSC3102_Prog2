@@ -10,12 +10,12 @@ public class Pair implements Comparable<Pair> {
         c = x;
     }
 
-    public int getFreq(Pair obj){
-        return obj.freq;
+    public int getFreq(){
+        return this.freq;
     }
 
-    public char getChar(Pair obj){
-        return obj.c;
+    public char getChar(){
+        return this.c;
     }
 
     public int compareTo(Pair other) {

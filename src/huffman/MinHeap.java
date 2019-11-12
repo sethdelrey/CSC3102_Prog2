@@ -44,8 +44,8 @@ public class MinHeap {
     private void minHeapify(int pos) {
         //if node is nonleaf & greater than
         //any of its children
-        Pair[] child = new Pair[k];
-        int minChild;
+        int[] child = new int[k];
+        int minChildFreq;
         int minChildIndex = -1;
 
         while (true) {
@@ -56,16 +56,16 @@ public class MinHeap {
                     child[i - 1] = Integer.MAX_VALUE;
             }
 
-            minChild = Integer.MAX_VALUE;
+            minChildFreq = Integer.MAX_VALUE;
 
             for (int i = 0; i < k; i++) {
-                if (child[i] != Integer.MAX_VALUE && Heap[child[i]] < minChild) {
+                if (child[i] != Integer.MAX_VALUE && Heap[child[i]].getFreq() < minChildFreq) {
                     minChildIndex = child[i];
-                    minChild = Heap[child[i]];
+                    minChildFreq = Heap[child[i]].getFreq();
                 }
             }
             //leaf node
-            if (minChild == Integer.MAX_VALUE)
+            if (minChildFreq == Integer.MAX_VALUE)
                 break;
 
             //swap only if key of minChildIndex
