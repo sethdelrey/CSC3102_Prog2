@@ -13,7 +13,6 @@ import java.util.Hashtable;
 
 public class TrieHash {
     public static HashEntryNode[] hashTable;
-    public static int[] rat;
 
     private static class HashEntryNode {
         HashEntryNode parent;
@@ -26,8 +25,16 @@ public class TrieHash {
         }
     }
 
+    private HashEntryNode root;
+
     public TrieHash(int size) {
         hashTable = new HashEntryNode[size];
     }
 
+    public void insert(String newWord) {
+        char letter = newWord.charAt(0);
+        HashEntryNode node = root.findChild(letter);
+
+
+    }
 }

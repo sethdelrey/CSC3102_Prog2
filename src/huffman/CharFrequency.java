@@ -36,6 +36,6 @@ public class CharFrequency {
 
     public static void main(String[] args) {
         String str = "Ajit hey. tAAheare";
-        charCount(str);
+        //charCount(str);
     }
 }
