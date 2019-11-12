@@ -1,19 +1,26 @@
-//package huffman;
-//
-//public class HuffmanEncoding {
-//
-//    private char[] Heap;
-//    private int size;
-//
-//    public char huffmanAlgorithm(char[] x) {
-//        CharFrequency t = new CharFrequency();
-//        int n = x.length;
-//        MaxHeap A = new MaxHeap(n, 2);
-//        for (char c : x) {
-//            A.insert
-//        }
-//
-//    }
-//
-//
-//}
+package huffman;
+
+import java.util.Comparator;
+
+class HNode {
+    int data;
+    char c;
+
+    HNode left;
+    HNode right;
+}
+
+class MyComparator implements Comparator<HNode> {
+    public int compare(HNode x, HNode y) {
+        return x.data - y.data;
+    }
+}
+
+public class HuffmanEncoding {
+
+
+
+
+
+
+}

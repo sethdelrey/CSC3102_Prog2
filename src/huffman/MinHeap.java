@@ -1,12 +1,10 @@
 package huffman;
 
-import javafx.util.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class MinHeap {
-    private int[] Heap;     //array representation of the minHeap
+    private Pair[] Heap;     //array representation of the minHeap
     private int size;       //number of current elements in the heap
     private int maxsize;    //maximum number of elements the heap can hold
     private int k;          //maximum number of children each parent element can hold
@@ -16,11 +14,11 @@ public class MinHeap {
     public MinHeap(int maxsize, int k) {
         this.maxsize = maxsize;
         this.size = 0;
-        Heap = new int[this.maxsize];
+        Heap = new Pair[this.maxsize];
         this.k = k;
     }
 
-    //returns the parent element of the element in the given index pos
+    //returns the index of the parent element of the element in the given index pos
     private int parent(int pos) {
         return pos/k;
     }
@@ -35,7 +33,7 @@ public class MinHeap {
 
     //swaps 2 nodes of the heap at the indices fpos and spos
     private void swap(int fpos, int spos) {
-        int temp;
+        Pair temp;
         temp = Heap[fpos];
         Heap[fpos] = Heap[spos];
         Heap[spos] = temp;
@@ -47,7 +45,7 @@ public class MinHeap {
         //if node is nonleaf & greater than
         //any of its children
         int[] child = new int[k];
-        int minChild;
+        int minChildFreq;
         int minChildIndex = -1;
 
         while (true) {
@@ -58,21 +56,21 @@ public class MinHeap {
                     child[i - 1] = Integer.MAX_VALUE;
             }
 
-            minChild = Integer.MAX_VALUE;
+            minChildFreq = Integer.MAX_VALUE;
 
             for (int i = 0; i < k; i++) {
-                if (child[i] != Integer.MAX_VALUE && Heap[child[i]] < minChild) {
+                if (child[i] != Integer.MAX_VALUE && Heap[child[i]].getFreq() < minChildFreq) {
                     minChildIndex = child[i];
-                    minChild = Heap[child[i]];
+                    minChildFreq = Heap[child[i]].getFreq();
                 }
             }
             //leaf node
-            if (minChild == Integer.MAX_VALUE)
+            if (minChildFreq == Integer.MAX_VALUE)
                 break;
 
             //swap only if key of minChildIndex
             //is less than key of node
-            if (Heap[pos] > Heap[minChildIndex])
+            if (Heap[pos].compareTo(Heap[minChildIndex]) == 1)
                 swap(pos, minChildIndex);
 
             pos = minChildIndex;
@@ -82,14 +80,14 @@ public class MinHeap {
     //Method to insert a value in the heap
     //Parameter x is the key of the element
     public void insert(int x, char y) {
+        Pair charAndFreq = new Pair(x, y);
         if (size >= maxsize) {
             return;
         }
-        Heap[size] = x;
-        Pair<Integer, Character> pair = new Pair<Integer, Character>(x, y);
+        Heap[size] = charAndFreq;
         int curr = size;
         size++;
-        while (Heap[curr] < Heap[parent(curr)]) {
+        while (Heap[curr].compareTo(Heap[parent(curr)]) == -1) {
             swap(curr, parent(curr));
             curr = parent(curr);
         }
@@ -98,8 +96,8 @@ public class MinHeap {
     //Method that returns the key of the minimum value
     //of the heap and restores the heap property
     //of the remaining nodes
-    public int extractMin() {
-        int popped = Heap[0];
+    public Pair extractMin() {
+        Pair popped = Heap[0];
         Heap[0] = Heap[--size];
         minHeapify(0);
         return popped;
