@@ -1,7 +1,5 @@
 package huffman;
 
-import javafx.util.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +33,7 @@ public class MinHeap {
 
     //swaps 2 nodes of the heap at the indices fpos and spos
     private void swap(int fpos, int spos) {
-        int temp;
+        Pair temp;
         temp = Heap[fpos];
         Heap[fpos] = Heap[spos];
         Heap[spos] = temp;
@@ -46,7 +44,7 @@ public class MinHeap {
     private void minHeapify(int pos) {
         //if node is nonleaf & greater than
         //any of its children
-        int[] child = new int[k];
+        Pair[] child = new Pair[k];
         int minChild;
         int minChildIndex = -1;
 
@@ -72,7 +70,7 @@ public class MinHeap {
 
             //swap only if key of minChildIndex
             //is less than key of node
-            if (Heap[pos] > Heap[minChildIndex])
+            if (Heap[pos].compareTo(Heap[minChildIndex]) == 1)
                 swap(pos, minChildIndex);
 
             pos = minChildIndex;
@@ -82,14 +80,14 @@ public class MinHeap {
     //Method to insert a value in the heap
     //Parameter x is the key of the element
     public void insert(int x, char y) {
+        Pair charAndFreq = new Pair(x, y);
         if (size >= maxsize) {
             return;
         }
-        Heap[size] = x;
-        Pair<Integer, Character> pair = new Pair<Integer, Character>(x, y);
+        Heap[size] = charAndFreq;
         int curr = size;
         size++;
-        while (Heap[curr] < Heap[parent(curr)]) {
+        while (Heap[curr].compareTo(Heap[parent(curr)]) == -1) {
             swap(curr, parent(curr));
             curr = parent(curr);
         }
