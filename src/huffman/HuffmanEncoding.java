@@ -2,6 +2,8 @@ package huffman;
 
 import java.util.Comparator;
 
+//make whitespace its own character; can do "if not LetterOrDigit, add 1 to whitespace"
+
 class HNode {
     int data;
     char c;
