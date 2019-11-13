@@ -6,21 +6,44 @@ import java.util.Scanner;
 
 //make whitespace its own character; can do "if not LetterOrDigit, add 1 to whitespace"
 
-class HNode {
-    int data;
+class Pair implements Comparable<Pair> {
+
+    int freq;
     char c;
+    Pair right;
+    Pair left;
 
-    HNode left;
-    HNode right;
-}
+//    public Pair(int f, char x){
+//        freq = f;
+//        c = x;
+//    }
 
-class MyComparator implements Comparator<HNode> {
-    public int compare(HNode x, HNode y) {
-        return x.data - y.data;
+    public int getFreq(){
+        return this.freq;
+    }
+
+    public char getChar(){
+        return this.c;
+    }
+
+    public int compareTo(Pair other) {
+        //returns negative if object is LESS than other
+        int retVal = 0;
+        if (freq < other.freq)
+            retVal = -1;
+        else if (freq > other.freq)
+            retVal = 1;
+        return retVal;
     }
 }
 
-public class HuffmanEncoding {
+//class MyComparator implements Comparator<HNode> {
+//    public int compare(HNode x, HNode y) {
+//        return x.data - y.data;
+//    }
+//}
+
+public class Huffman {
 
     public static void printCode(HNode root, String s) {
 
@@ -45,37 +68,36 @@ public class HuffmanEncoding {
         MinHeap q = new MinHeap(n, 2);
 
         for (int i = 0; i < n; i++) {
-            HNode hn = new HNode();
+            Pair hn = new Pair();
             hn.c = charArray[i];
-            hn.data = charFreq[i];
+            hn.freq = charFreq[i];
 
             hn.left = null;
             hn.right = null;
 
-            q.add(hn);
+            q.insert(hn);
         }
 
-        HNode root = null;
+        Pair root = null;
 
         //extract 2 min nodes from the heap and make a parent node that
         // stores their added frequencies and points to the 2 char nodes
-        while (q.size() > 1) {
-            HNode x = q.peek();
-            q.poll();
+        while (q.getSize() > 1) {
+            Pair x = q.extractMin();
 
-            HNode y = q.peek();
-            q.poll();
+            Pair y = q.extractMin();
 
-            HNode f = new HNode();
+            Pair f = new Pair();
 
-            f.data = x.data + y.data;
+            f.freq = x.freq + y.freq;
             f.c = '-';
 
             f.left = x;
             f.right = y;
             root = f;
-            q.add(f);
+            q.insert(f);
         }
         printCode(root, "");
     }
 }
+

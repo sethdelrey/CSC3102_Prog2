@@ -23,6 +23,14 @@ public class MinHeap {
         return pos/k;
     }
 
+    private int leftChild(int pos) {
+        return (k*pos) + 1;
+    }
+
+    private int rightChild(int pos) {
+        return (k*pos) + 2;
+    }
+
     //returns true if the element at index pos has no children
     private boolean isLeaf(int pos) {
         if (pos >= (size/k) && pos <= size) {
@@ -79,8 +87,7 @@ public class MinHeap {
 
     //Method to insert a value in the heap
     //Parameter x is the key of the element
-    public void insert(int x, char y) {
-        Pair charAndFreq = new Pair(x, y);
+    public void insert(Pair charAndFreq) {
         if (size >= maxsize) {
             return;
         }
@@ -101,5 +108,9 @@ public class MinHeap {
         Heap[0] = Heap[--size];
         minHeapify(0);
         return popped;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

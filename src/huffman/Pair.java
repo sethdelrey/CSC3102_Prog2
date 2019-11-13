@@ -1,6 +1,6 @@
 package huffman;
 
-public class Pair implements Comparable<Pair> {
+//public class Pair implements Comparable<Pair> {
 
     private int freq;
     private char c;
