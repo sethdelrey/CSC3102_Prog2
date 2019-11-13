@@ -39,5 +39,7 @@ public class TrieDriverClass {
             e.printStackTrace();
         }
 
+        trie.lookup("a");
+
     }
 }
