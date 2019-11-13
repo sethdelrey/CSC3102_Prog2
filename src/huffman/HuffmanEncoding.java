@@ -24,7 +24,7 @@ public class HuffmanEncoding {
 
     public static void printCode(HNode root, String s) {
 
-        if (root.left == null && root.right == null && Character.isLetterOrDigit(root.c)) {
+        if (root.left == null && root.right == null) {
             System.out.println(root.c + ":" + s);
             return;
         }
@@ -35,9 +35,11 @@ public class HuffmanEncoding {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        int n = 6;
-        char[] charArray = { 'a', 'b', 'c', 'd', 'e', 'f' };
-        int[] charFreq = { 80, 9, 12, 13, 16, 45 };
+        CharFrequency fq = new CharFrequency();
+        fq.charCount("hhoeourhgoeurh e.e diw.e id we wkkqaaaaaaaaaa");
+        char[] charArray = fq.getCharArray();
+        int[] charFreq = fq.getFreqArray();
+        int n = charArray.length;
 
         PriorityQueue<HNode> q = new PriorityQueue<HNode>(n, new MyComparator());
 
