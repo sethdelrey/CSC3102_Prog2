@@ -10,7 +10,7 @@ class Pair implements Comparable<Pair> {
 
     int freq;
     char c;
-    Pair right;
+    Pair right; /*figure out left and right children!!*/
     Pair left;
 
 //    public Pair(int f, char x){
@@ -45,7 +45,7 @@ class Pair implements Comparable<Pair> {
 
 public class Huffman {
 
-    public static void printCode(HNode root, String s) {
+    public static void printCode(Pair root, String s) {
 
         if (root.left == null && root.right == null) {
             System.out.println(root.c + ":" + s);
