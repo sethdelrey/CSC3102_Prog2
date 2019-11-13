@@ -16,7 +16,7 @@ public class CharFrequency {
 
     public void charCount(String inputString) {
 
-        inputString = inputString.replaceAll("[^a-zA-Z0-9_-]", "").toLowerCase();
+        inputString = inputString.replaceAll("[^a-zA-Z0-9_-]", " ");
         char[] strArray = inputString.toCharArray();
 
         for(char c: strArray) {
