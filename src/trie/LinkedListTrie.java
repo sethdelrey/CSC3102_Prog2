@@ -1,6 +1,6 @@
 package trie;
 
-public class Trie {
+public class LinkedListTrie {
     private class TrieNode {
         char lead;
         String label;
@@ -29,22 +29,18 @@ public class Trie {
             }
         }
 
-        public void insert(String newWord) {
-            newWord = newWord.toLowerCase();
-            char newLead = newWord.charAt(0);
-            newWord = newWord.substring(1);
-            TrieNode newNode = new TrieNode(newLead, newWord, true);
-            TrieNode temp = findChild(newLead);
+        public void insert(TrieNode newNode) {
+            TrieNode temp = findChild(newNode.lead);
 
             if (temp == null) {
-                firstChild = new TrieNode(newLead, newWord, true);
+                firstChild = newNode;
             }
-            else if (temp.lead < newLead) {
+            else if (temp.lead < newNode.lead) {
                 newNode.rightSibling = temp.rightSibling;
                 temp.rightSibling = newNode;
             }
-            else if (temp.lead == newLead) {
-                char[] wordAsArray = newWord.toCharArray();
+            else if (temp.lead == newNode.lead) {
+                char[] wordAsArray = newNode.label.toCharArray();
                 char[] labelAsArray = temp.label.toCharArray();
                 int i = 0;
                 if (wordAsArray.length >= labelAsArray.length) {
@@ -68,26 +64,26 @@ public class Trie {
                 else {
                     String newOriginalLabel = temp.label.substring(0,i);
                     String newLabel1 = temp.label.substring(i);
-                    String newLabel2 = newWord.substring(i);
+                    String newLabel2 = newNode.label.substring(i);
                     temp.label = newOriginalLabel;
-
                     if (newLabel1.length() != 0 && newLabel2.length() != 0) {
                         char newLead1 = newLabel1.charAt(0);
                         char newLead2 = newLabel2.charAt(0);
-                        newLabel1 = (newLabel1.length() == 1) ? "" : newLabel1;
-                        newLabel2 = (newLabel2.length() == 1) ? "" : newLabel2;
-                        TrieNode nodeForOriginalNode = new TrieNode(newLead1, newLabel1, true);
-                        TrieNode nodeForSecondaryNode = new TrieNode(newLead2, newLabel2,true);
+                        newLabel1 = (newLabel1.length() == 1) ? "" : newLabel1.substring(1);
+                        newLabel2 = (newLabel2.length() == 1) ? "" : newLabel2.substring(1);
+                        TrieNode nodeForOriginalNode = new TrieNode(newLead1, newLabel1, temp.isWord);
+                        newNode.lead = newLead2;
+                        newNode.label = newLabel2;
                         temp.isWord = false;
-                        if (nodeForOriginalNode.lead < nodeForSecondaryNode.lead) {
+                        if (nodeForOriginalNode.lead < newNode.lead) {
                             nodeForOriginalNode.firstChild = temp.firstChild;
                             temp.firstChild = nodeForOriginalNode;
-                            nodeForOriginalNode.rightSibling = nodeForSecondaryNode;
+                            nodeForOriginalNode.rightSibling = newNode;
                         }
                         else {
-                            nodeForSecondaryNode.firstChild = temp.firstChild;
-                            temp.firstChild = nodeForSecondaryNode;
-                            nodeForSecondaryNode.rightSibling = nodeForOriginalNode;
+                            newNode.firstChild = temp.firstChild;
+                            temp.firstChild = newNode;
+                            newNode.rightSibling = nodeForOriginalNode;
                         }
                     }
                     else if (newLabel1.length() != 0) {
@@ -95,7 +91,9 @@ public class Trie {
                         temp.firstChild = nodeForOriginalNode;
                     }
                     else {
-                        temp.insert(newLabel2);
+                        newNode.lead = newLabel2.charAt(0);
+                        newNode.label = (newLabel2.length() == 1) ? "" : newLabel2.substring(1);
+                        temp.insert(newNode);
                     }
                 }
             }
@@ -123,50 +121,34 @@ public class Trie {
     private TrieNode root;
     private int size;
 
-    public Trie() {
+    public LinkedListTrie() {
         root = new TrieNode(' ', null, false);
     }
 
     public void insert(String newWord) {
-        root.insert(newWord);
+        char lead  = newWord.charAt(0);
+        newWord = (newWord.length() == 1) ? "" : newWord.substring(1);
+        root.insert(new TrieNode(lead, newWord, true));
         size++;
     }
 
-    public void display() {
-        root.firstChild.display("");
-//        String str = "";
-//        TrieNode current = root.firstChild;
-//        TrieNode parent = root;
-//        while (current != null) {
-//            if (current.isWord) {
-//                System.out.println(str + current.lead + current.label);
-//            }
-//            if (current.firstChild != null) {
-//                str += current.lead + current.label;
-//                parent = current;
-//                current = current.firstChild;
-//            }
-//            else if (current.rightSibling != null) {
-//                //str = str.substring(0,str.length()-(1+current.label.length()));
-//                current = current.rightSibling;
-//            }
-//            else {
-//                str = str.substring(0,str.length()-(1+parent.label.length()));
-//                current = parent.rightSibling;
-//
-//            }
-//        }
-    }
+    public void lookup(String prefix) {
+        if (prefix != null && !prefix.isEmpty()) {
+            char[] prefixAsArray = prefix.toCharArray();
+            TrieNode current = root.findChild(prefixAsArray[0]);
+            TrieNode parent = root;
+            int i = 0;
+            while (i < prefix.length() && current != null) {
+                if (current.lead == prefixAsArray[i]) {
+                    parent = current;
+                    current = current.firstChild;
+                    i++;
+                } else {
+                    current = current.rightSibling;
+                }
+            }
 
-
-
-    public void print(TrieNode node, String str, int level) {
-        if (node.firstChild == null && node.rightSibling == null || node.isWord) {
-            System.out.println(str);
-        }
-
-        for (int i = 0; i < size; i++) {
+            current.display(prefix);
         }
     }
-
 }

@@ -6,17 +6,17 @@ import java.util.Scanner;
 
 public class TrieDriverClass {
     public static void main(String args[]) {
-        Trie trie = new Trie();
+        LinkedListTrie linkedListTrie = new LinkedListTrie();
         try (Scanner fin = new Scanner(new File("input.txt"))) {
             while (fin.hasNext()) {
-                trie.insert(fin.next());
+                linkedListTrie.insert(fin.next());
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
 
-        trie.display();
+        linkedListTrie.lookup("a");
 
     }
 }
