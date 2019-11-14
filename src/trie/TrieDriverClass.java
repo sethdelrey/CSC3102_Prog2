@@ -40,6 +40,7 @@ public class TrieDriverClass {
         }
 
         trie.lookup("a");
+        //trie.lookup("a");
 
     }
 }
