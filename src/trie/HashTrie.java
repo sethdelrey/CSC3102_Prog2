@@ -43,28 +43,11 @@ public class HashTrie {
             c = _c;
         }
 
-//        public HashEntryNode findChild(char c) {
-//            if (child == null) {
-//                return null;
-//            }
-//
-//            int hashCode = hashCode(c);
-//            HashEntryNode current = hashTable[hashCode];
-//            while (current != null) {
-//                if (current.c == c) {
-//                    break;
-//                }
-//                current = current.next;
-//            }
-//            return current;
-//        }
-
-//        public int hashCode(char _c) {
-//            char parentC = (this != null) ? this.c : _c;
-//            int hash = _c * 5 + parentC * 7;
-//            hash = hash % hashTable.length;
-//            return hash;
-//        }
+        public HashEntryNode(Node _parent, Node _child, char _c) {
+            parent = _parent;
+            child = _child;
+            c = _c;
+        }
     }
 
     private class Node {
@@ -104,20 +87,6 @@ public class HashTrie {
             int hash = _c * 5 + parentC * 7;
             hash = hash % hashTable.length;
             return hash;
-        }
-
-        public void display(String str) {
-            str += lead + label;
-            if (isWord) {
-                System.out.println(str);
-            }
-            if (firstChild != null) {
-                firstChild.display(str);
-            }
-            if (rightSibling != null) {
-                str = str.substring(0,str.length()-(1+label.length()));
-                rightSibling.display(str);
-            }
         }
 
         public void insert(Node newNode) {
@@ -176,9 +145,10 @@ public class HashTrie {
                 }
 
                 // Split label at i and form two nodes.
-                if (i == labelAsArray.length && labelAsArray.length == wordAsArray.length) {
-                }
-                else {
+//                if (i == labelAsArray.length && labelAsArray.length == wordAsArray.length) {
+//                    int test = 0;
+//                }
+                if (i != labelAsArray.length || labelAsArray.length != wordAsArray.length) {
                     String newOriginalLabel = temp.label.substring(0,i);
                     String newLabel1 = temp.label.substring(i);
                     String newLabel2 = newNode.label.substring(i);
@@ -189,68 +159,46 @@ public class HashTrie {
                         newLabel1 = (newLabel1.length() == 1) ? "" : newLabel1.substring(1);
                         newLabel2 = (newLabel2.length() == 1) ? "" : newLabel2.substring(1);
                         Node nodeForOriginalNode = new Node(newLead1, newLabel1, temp.isWord);
-//                        nodeForOriginalNode.nodeId = idCounter;
-//                        idCounter++;
                         newNode.lead = newLead2;
                         newNode.label = newLabel2;
                         temp.isWord = false;
-                        nodeForOriginalNode.firstChild = temp.firstChild;
-                        Node current = nodeForOriginalNode.firstChild;
-                        while (current != null) {
-                            HashEntryNode deleteNode = hashTable[current.hashCode(temp, current.lead)];
-                            HashEntryNode prev = null;
-                            if (deleteNode != null && deleteNode.c == current.lead) {
-                                hashTable[current.hashCode(temp, current.lead)] = deleteNode.next;
-                                insertIntoHashTable(nodeForOriginalNode, current, current.lead);
-                                current = current.rightSibling;
-                                continue;
-                            }
-
-                            while (deleteNode != null && deleteNode.c != current.lead) {
-                               prev = deleteNode;
-                               deleteNode = deleteNode.next;
-                            }
-
-                            if (deleteNode != null) {
-                                prev.next = deleteNode.next;
-                            }
-
-                            insertIntoHashTable(nodeForOriginalNode, current, current.lead);
-                            current = current.rightSibling;
-                        }
-
                         if (nodeForOriginalNode.lead < newNode.lead) {
+                            nodeForOriginalNode.firstChild = temp.firstChild;
                             temp.firstChild = nodeForOriginalNode;
                             nodeForOriginalNode.rightSibling = newNode;
                             insertIntoHashTable(temp, newNode, newNode.lead);
                         }
                         else {
+                            newNode.firstChild = temp.firstChild;
                             temp.firstChild = newNode;
                             newNode.rightSibling = nodeForOriginalNode;
                             insertIntoHashTable(temp, newNode, newNode.lead);
                         }
-
-
-
                     }
                     else if (newLabel1.length() != 0) {
                         Node nodeForOriginalNode = new Node(newLabel1.charAt(0), newLabel1, true);
-//                        nodeForOriginalNode.nodeId = idCounter;
-//                        idCounter++;
                         temp.firstChild = nodeForOriginalNode;
                     }
                     else {
-                        // Shrinks newWord and searches where it should go.
                         newNode.lead = newLabel2.charAt(0);
                         newNode.label = (newLabel2.length() == 1) ? "" : newLabel2.substring(1);
                         temp.insert(newNode);
                     }
                 }
             }
-            else if (temp == firstChild) {
-                newNode.rightSibling = firstChild;
-                firstChild = newNode;
-                insertIntoHashTable(this,newNode,newNode.lead);
+        }
+
+        public void display(String str) {
+            str += lead + label;
+            if (isWord) {
+                System.out.println(str);
+            }
+            if (firstChild != null) {
+                firstChild.display(str);
+            }
+            if (rightSibling != null) {
+                str = str.substring(0,str.length()-(1+label.length()));
+                rightSibling.display(str);
             }
         }
     }
@@ -269,16 +217,10 @@ public class HashTrie {
         int hashCode = _child.hashCode(_parent, _c);
         HashEntryNode eNode = hashTable[hashCode];
 
-        HashEntryNode newNode = new HashEntryNode() {
-            {
-                parent = _parent;
-                child = _child;
-                c = _c;
-                next = (eNode != null) ? eNode.next : null;
-            }
-        };
+        HashEntryNode newNode = new HashEntryNode(_parent, _child, _c);
 
         if (eNode != null) {
+            newNode.next = eNode.next;
             eNode.next = newNode;
         }
         else {
@@ -287,9 +229,6 @@ public class HashTrie {
     }
 
     public void insert(String newWord) {
-        if (newWord.equals("arborize")) {
-            int i = 0;
-        }
         char letter = newWord.charAt(0);
         newWord = (newWord.length() == 1) ? "" : newWord.substring(1);
         Node newNode = new Node(letter, newWord, true);
