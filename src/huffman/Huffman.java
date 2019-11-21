@@ -1,5 +1,10 @@
 package huffman;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
@@ -58,46 +63,56 @@ public class Huffman {
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        CharFrequency fq = new CharFrequency();
-        fq.charCount("hhoeourhgoeurh e.e diw.e id we wkkqaaaaaaaaaa");
-        char[] charArray = fq.getCharArray();
-        int[] charFreq = fq.getFreqArray();
-        int n = charArray.length;
+        String str = "";
+        try {
+            str = new String (Files.readAllBytes(Paths.get("huffmaninput.txt")));
+            CharFrequency fq = new CharFrequency();
+            fq.charCount(str);
 
-//        PriorityQueue<HNode> q = new PriorityQueue<HNode>(n, new MyComparator());
-        MinHeap q = new MinHeap(n, 2);
+            str = str.replaceAll("[^a-zA-Z0-9_-]", " ");
+            char[] strArray = str.toCharArray();
 
-        for (int i = 0; i < n; i++) {
-            Pair hn = new Pair();
-            hn.c = charArray[i];
-            hn.freq = charFreq[i];
+            char[] charArray = fq.getCharArray();
+            int[] charFreq = fq.getFreqArray();
+            int n = charArray.length;
 
-            hn.left = null;
-            hn.right = null;
+            MinHeap q = new MinHeap(n, 2);
 
-            q.insert(hn);
+            for (int i = 0; i < n; i++) {
+                Pair hn = new Pair();
+                hn.c = charArray[i];
+                hn.freq = charFreq[i];
+
+                hn.left = null;
+                hn.right = null;
+
+                q.insert(hn);
+            }
+
+            Pair root = null;
+
+            //extract 2 min nodes from the heap and make a parent node that
+            // stores their added frequencies and points to the 2 char nodes
+            while (q.getSize() > 1) {
+                Pair x = q.extractMin();
+
+                Pair y = q.extractMin();
+
+                Pair f = new Pair();
+
+                f.freq = x.freq + y.freq;
+                f.c = '-';
+
+                f.left = x;
+                f.right = y;
+                root = f;
+                q.insert(f);
+            }
+            printCode(strArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        Pair root = null;
-
-        //extract 2 min nodes from the heap and make a parent node that
-        // stores their added frequencies and points to the 2 char nodes
-        while (q.getSize() > 1) {
-            Pair x = q.extractMin();
-
-            Pair y = q.extractMin();
-
-            Pair f = new Pair();
-
-            f.freq = x.freq + y.freq;
-            f.c = '-';
-
-            f.left = x;
-            f.right = y;
-            root = f;
-            q.insert(f);
-        }
-        printCode(root, "");
     }
 }
 
