@@ -3,9 +3,11 @@ package huffman;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
@@ -50,15 +52,25 @@ class Pair implements Comparable<Pair> {
 
 public class Huffman {
 
-    public static void printCode(Pair root, String s) {
+
+    public static void printCode(HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
+            PrintWriter out = new PrintWriter("huffmanoutput.txt");
+            
+    }
+
+    public static void encode(Pair root, String s, HashMap<Character, String> codeMap, char[] strArray) {
 
         if (root.left == null && root.right == null) {
-            System.out.println(root.c + ":" + s);
+//            System.out.println(root.c + ":" + s);
+            codeMap.put(root.c, s);
             return;
         }
 
-        printCode(root.left, s+"0");
-        printCode(root.right, s+"1");
+        encode(root.left, s+"0", codeMap, strArray);
+        encode(root.right, s+"1", codeMap, strArray);
+
+
+
     }
 
     public static void main(String[] args) {
@@ -108,10 +120,13 @@ public class Huffman {
                 root = f;
                 q.insert(f);
             }
-            printCode(strArray);
+            HashMap<Character, String> codeMap = new HashMap<Character, String>();
+            encode(root, "", codeMap, strArray);
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 }
