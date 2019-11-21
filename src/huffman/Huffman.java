@@ -4,26 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.PriorityQueue;
 import java.util.Scanner;
-
-//make whitespace its own character; can do "if not LetterOrDigit, add 1 to whitespace"
 
 class Pair implements Comparable<Pair> {
 
     int freq;
     char c;
-    Pair right; /*figure out left and right children!!*/
+    Pair right;
     Pair left;
-
-//    public Pair(int f, char x){
-//        freq = f;
-//        c = x;
-//    }
 
     public int getFreq(){
         return this.freq;
@@ -53,37 +42,45 @@ class Pair implements Comparable<Pair> {
 public class Huffman {
 
 
-    public static void printCode(HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
-            PrintWriter out = new PrintWriter("huffmanoutput.txt");
-            
-    }
-
-    public static void encode(Pair root, String s, HashMap<Character, String> codeMap, char[] strArray) {
-
-        if (root.left == null && root.right == null) {
-//            System.out.println(root.c + ":" + s);
-            codeMap.put(root.c, s);
-            return;
-        }
-
-        encode(root.left, s+"0", codeMap, strArray);
-        encode(root.right, s+"1", codeMap, strArray);
+//    public static void printCode(HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
+//            PrintWriter out = new PrintWriter(new File ("huffmanoutput.txt"));
+//            for (int i = 0; i<strArray.length; i++) {
+//                out.print(codeMap.get(strArray[i]));
+//            }
+//
+//    }
 
 
-
-    }
+//    public static void encodeR(Pair root, String s, HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
+//
+//        if (root.left == null && root.right == null) {
+////            System.out.println(root.c + ":" + s);
+//            codeMap.put(root.c, s);
+//            return;
+//        }
+//
+//        encodeR(root.left, s+"0", codeMap, strArray);
+//        encodeR(root.right, s+"1", codeMap, strArray);
+//
+//        printCode(codeMap, strArray);
+//
+//    }
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
         String str = "";
         try {
-            str = new String (Files.readAllBytes(Paths.get("huffmaninput.txt")));
-            CharFrequency fq = new CharFrequency();
-            fq.charCount(str);
+            Scanner s = new Scanner(new File("huffmaninput"));
+            while (s.hasNextLine()) {
+                str += s.nextLine();
+            }
+
 
             str = str.replaceAll("[^a-zA-Z0-9_-]", " ");
+            str = str.toLowerCase();
             char[] strArray = str.toCharArray();
 
+            CharFrequency fq = new CharFrequency();
+            fq.charCount(str);
             char[] charArray = fq.getCharArray();
             int[] charFreq = fq.getFreqArray();
             int n = charArray.length;
@@ -120,13 +117,13 @@ public class Huffman {
                 root = f;
                 q.insert(f);
             }
+            HuffmanPrint p = new HuffmanPrint(strArray);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
-            encode(root, "", codeMap, strArray);
+            p.encode(root, "");
+            p.printCode();
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
         }
     }
 }
