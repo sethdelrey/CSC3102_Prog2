@@ -6,22 +6,11 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class TrieDriverClass {
-    // LINKEDLIST TRIE MAIN METHOD
-//    public static void main(String args[]) {
-//        LinkedListTrie linkedListTrie = new LinkedListTrie();
-//        try (Scanner fin = new Scanner(new File("input.txt"))) {
-//            while (fin.hasNext()) {
-//                linkedListTrie.insert(fin.next());
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        linkedListTrie.lookup("a");
-//    }
-    // HASH TRIE MAIN METHOD
     public static void main(String[] args) {
+        // LINKEDLIST TRIE MAIN METHOD
+        long startTime = System.nanoTime();
         LinkedListTrie linkedListTrie = new LinkedListTrie();
-        try (Scanner fin = new Scanner(new File("input.txt"))) {
+        try (Scanner fin = new Scanner(new File("WORD.LST"))) {
             while (fin.hasNext()) {
                 linkedListTrie.insert(fin.next());
             }
@@ -29,7 +18,7 @@ public class TrieDriverClass {
             e.printStackTrace();
         }
 
-        try (Scanner cin = new Scanner(new File("lookup.txt")); PrintWriter writer = new PrintWriter("outputHashTrie.txt")) {
+        try (Scanner cin = new Scanner(new File("lookup.txt")); PrintWriter writer = new PrintWriter("outputLinkedListTrie.txt")) {
             while (cin.hasNext()) {
                 linkedListTrie.lookup(cin.next(),writer);
             }
@@ -38,8 +27,15 @@ public class TrieDriverClass {
             System.out.print(e.getStackTrace());
         }
 
+        long endTime = System.nanoTime();
+        long timeLinkedList = endTime - startTime;
+        timeLinkedList = timeLinkedList / 1000;
+        System.out.println("The time for the linked list trie was " + timeLinkedList + " ms");
+
+
+        // HASH TRIE MAIN METHOD
         int size = 0;
-        try (Scanner fin = new Scanner(new File("input.txt"))) {
+        try (Scanner fin = new Scanner(new File("WORD.LST"))) {
             while (fin.hasNext()) {
                 size++;
                 fin.next();
@@ -48,9 +44,10 @@ public class TrieDriverClass {
             e.printStackTrace();
         }
 
+        startTime = System.nanoTime();
         HashTrie trie = new HashTrie(size);
 
-        try (Scanner fin = new Scanner(new File("input.txt"))) {
+        try (Scanner fin = new Scanner(new File("WORD.LST"))) {
             while (fin.hasNext()) {
                 trie.insert(fin.next());
             }
@@ -66,5 +63,9 @@ public class TrieDriverClass {
         catch (Exception e) {
             System.out.print(e.getStackTrace());
         }
+        endTime = System.nanoTime();
+        long timeHashTrie = endTime - startTime;
+        timeHashTrie = timeHashTrie / 1000;
+        System.out.println("The time for the hash trie was " + timeHashTrie + " ms");
     }
 }
