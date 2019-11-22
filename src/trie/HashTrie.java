@@ -12,13 +12,13 @@ public class HashTrie {
         HashEntryNode next;
         char c;
 
-        public HashEntryNode() {
-            // Default Constructor
-        }
-
-        public HashEntryNode(char _c) {
-            c = _c;
-        }
+//        public HashEntryNode() {
+//            // Default Constructor
+//        }
+//
+//        public HashEntryNode(char _c) {
+//            c = _c;
+//        }
 
         public HashEntryNode(Node _parent, Node _child, char _c) {
             parent = _parent;
