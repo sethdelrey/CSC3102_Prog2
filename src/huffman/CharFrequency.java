@@ -1,6 +1,9 @@
 package huffman;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 
 public class CharFrequency {
@@ -9,28 +12,35 @@ public class CharFrequency {
     char[] keys;
     int[] values;
 
-    public void charCount(String inputString) {
-
-
-        inputString = inputString.replaceAll("[^a-zA-Z0-9]", " ");
-        char[] strArray = inputString.toCharArray();
-        int i = 0;
-
-        for(char c: strArray) {
+//    public void charCount(String inputString) {
+        public void charCount(File f) throws FileNotFoundException {
+//
+//        inputString = inputString.replaceAll("[^a-zA-Z0-9]", " ");
+//        char[] strArray = inputString.toCharArray();
+//        int i = 0;
+//
+//        for(char c: strArray) {
+//            if (charCountMap.containsKey(c)) {
+//                charCountMap.put(c, charCountMap.get(c) + 1);
+//            } else {
+//                charCountMap.put(c, 1);
+//            }
+//        }
+        char c;
+        Scanner s = new Scanner(f);
+        s.useDelimiter("");
+        while (s.hasNext()) {
+            c = s.next().charAt(0);
+            if (!Character.isLetterOrDigit(c))
+                c = ' ';
             if (charCountMap.containsKey(c)) {
                 charCountMap.put(c, charCountMap.get(c) + 1);
             } else {
                 charCountMap.put(c, 1);
             }
         }
-        while (s.hasNextChar()) {
 
-        }
-
-//        for (Map.Entry entry : charCountMap.entrySet()) {
-//            System.out.println(entry.getKey() + " " + entry.getValue());
-//        }
-
+        int i = 0;
         //creates 2 arrays for keys and values
         keys = new char[charCountMap.size()];
         values = new int[charCountMap.size()];

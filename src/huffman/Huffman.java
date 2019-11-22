@@ -38,17 +38,20 @@ public class Huffman {
     public static void main(String[] args) {
         String str = "";
         try {
-            Scanner s = new Scanner(new File("huffmaninput"));
-            while (s.hasNextLine()) {
-                str += s.nextLine();
-            }
-
-            str = str.replaceAll("[^a-zA-Z0-9]", " ");
-            str = str.toLowerCase();
-            char[] strArray = str.toCharArray();
+//            Scanner s = new Scanner(new File("huffmaninput"));
+//            while (s.hasNextLine()) {
+//                str += s.nextLine();
+//            }
+//
+//            str = str.replaceAll("[^a-zA-Z0-9]", " ");
+//            str = str.toLowerCase();
+//            char[] strArray = str.toCharArray();
 
             CharFrequency fq = new CharFrequency();
-            fq.charCount(str);
+//            fq.charCount(str);
+            File f = new File("huffmaninput");
+            fq.charCount(f);
+
             char[] charArray = fq.getCharArray();
             int[] charFreq = fq.getFreqArray();
             int n = charArray.length;
@@ -90,7 +93,7 @@ public class Huffman {
             //decodes file
 
 
-            HuffmanPrint p = new HuffmanPrint(strArray);
+            HuffmanPrint p = new HuffmanPrint(f);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
             p.encode(root, "");
             p.printCode();

@@ -2,14 +2,16 @@ package huffman;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class HuffmanPrint {
 
     HashMap<Character, String> codeMap = new HashMap<Character, String>();
-    char[] strArray;
+//    char[] strArray;
+    Scanner s;
 
-    HuffmanPrint(char[] arr) {
-        strArray = arr;
+    HuffmanPrint(File f) throws FileNotFoundException {
+        s = new Scanner(f);
     }
 
     public void encode(Pair root, String s) throws FileNotFoundException {
@@ -24,9 +26,16 @@ public class HuffmanPrint {
 
     public void printCode() throws IOException {
         FileWriter out = new FileWriter(new File("huffmanoutput.txt"));
-        for (int i = 0; i<strArray.length; i++) {
-            out.write(codeMap.get(strArray[i]));
+        char ch;
+        s.useDelimiter("");
+        while (s.hasNext()) {
+             ch = s.next().charAt(0);
+            if (!Character.isLetterOrDigit(ch))
+                ch = ' ';
         }
+//        for (int i = 0; i<strArray.length; i++) {
+//            out.write(codeMap.get(strArray[i]));
+//        }
         out.close();
     }
 }
