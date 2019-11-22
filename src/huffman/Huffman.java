@@ -79,15 +79,15 @@ public class Huffman {
 
                 Pair y = q.extractMin();
 
-                Pair f = new Pair();
+                Pair t = new Pair();
 
-                f.freq = x.freq + y.freq;
-                f.c = '-';
+                t.freq = x.freq + y.freq;
+                t.c = '-';
 
-                f.left = x;
-                f.right = y;
-                root = f;
-                q.insert(f);
+                t.left = x;
+                t.right = y;
+                root = t;
+                q.insert(t);
             }
 
             //decodes file
