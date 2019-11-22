@@ -36,7 +36,7 @@ public class HuffmanPrint {
     public void printCode() throws IOException {
         FileWriter out = new FileWriter(new File("huffmanoutput.txt"));
         char ch;
-        try (BufferedReader br = new BufferedReader(new FileReader(new File("english_50MB.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File("huffmaninput.txt")))) {
             String line;
             Scanner lineScanner;
             while ((line = br.readLine()) != null) {
