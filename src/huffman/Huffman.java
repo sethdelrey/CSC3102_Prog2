@@ -33,38 +33,7 @@ class Pair implements Comparable<Pair> {
     }
 }
 
-//class MyComparator implements Comparator<HNode> {
-//    public int compare(HNode x, HNode y) {
-//        return x.data - y.data;
-//    }
-//}
-
 public class Huffman {
-
-
-//    public static void printCode(HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
-//            PrintWriter out = new PrintWriter(new File ("huffmanoutput.txt"));
-//            for (int i = 0; i<strArray.length; i++) {
-//                out.print(codeMap.get(strArray[i]));
-//            }
-//
-//    }
-
-
-//    public static void encodeR(Pair root, String s, HashMap<Character, String> codeMap, char[] strArray) throws FileNotFoundException {
-//
-//        if (root.left == null && root.right == null) {
-////            System.out.println(root.c + ":" + s);
-//            codeMap.put(root.c, s);
-//            return;
-//        }
-//
-//        encodeR(root.left, s+"0", codeMap, strArray);
-//        encodeR(root.right, s+"1", codeMap, strArray);
-//
-//        printCode(codeMap, strArray);
-//
-//    }
 
     public static void main(String[] args) {
         String str = "";
@@ -74,8 +43,7 @@ public class Huffman {
                 str += s.nextLine();
             }
 
-
-            str = str.replaceAll("[^a-zA-Z0-9_-]", " ");
+            str = str.replaceAll("[^a-zA-Z0-9]", " ");
             str = str.toLowerCase();
             char[] strArray = str.toCharArray();
 
@@ -87,6 +55,7 @@ public class Huffman {
 
             MinHeap q = new MinHeap(n, 2);
 
+            // creates Pairs and adds them to MinHeap
             for (int i = 0; i < n; i++) {
                 Pair hn = new Pair();
                 hn.c = charArray[i];
@@ -117,6 +86,9 @@ public class Huffman {
                 root = f;
                 q.insert(f);
             }
+
+
+
             HuffmanPrint p = new HuffmanPrint(strArray);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
             p.encode(root, "");
@@ -126,5 +98,7 @@ public class Huffman {
             e.printStackTrace();
         }
     }
+    public static decode
+
 }
 
