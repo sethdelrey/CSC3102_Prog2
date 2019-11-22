@@ -1,9 +1,17 @@
+/*
+Raquel Hodgeson (rhodg14@lsu.edu, 89-399-5177)
+Seth Richard (sric111@lsu.edu, 89-053-2395)
+Programming Project 2
+CSC 3102 - Dr. Shah
+11/23/19
+ */
 package huffman;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
+//pair class used in place of nodes to hold characters and their frequencies
 class Pair implements Comparable<Pair> {
 
     int freq;
@@ -32,6 +40,7 @@ class Pair implements Comparable<Pair> {
 
 public class Huffman {
 
+    //reads file, finds frequency of each character, prints huffman code and decodes
     public static void main(String[] args) {
         String str = "";
         try {
@@ -79,7 +88,11 @@ public class Huffman {
 
             HuffmanPrint p = new HuffmanPrint(f);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
+
+            //encodes file and prints it to file "huffmanoutput.txt"
             p.encode(root, "");
+
+            //prints decoded file to file "decodedhuffman.txt"
             decode(root);
             p.printCode();
 
@@ -88,6 +101,7 @@ public class Huffman {
         }
     }
 
+    //decodes huffman code and prints it to new file
     public static void decode(Pair root) {
         try {
             FileWriter out = new FileWriter("decodedhuffman.txt");

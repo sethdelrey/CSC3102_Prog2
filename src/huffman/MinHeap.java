@@ -1,7 +1,11 @@
+/*
+Raquel Hodgeson (rhodg14@lsu.edu, 89-399-5177)
+Seth Richard (sric111@lsu.edu, 89-053-2395)
+Programming Project 2
+CSC 3102 - Dr. Shah
+11/23/19
+ */
 package huffman;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MinHeap {
     private Pair[] Heap;     //array representation of the minHeap

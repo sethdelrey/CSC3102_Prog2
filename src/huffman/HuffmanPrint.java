@@ -1,3 +1,11 @@
+/*
+Raquel Hodgeson (rhodg14@lsu.edu, 89-399-5177)
+Seth Richard (sric111@lsu.edu, 89-053-2395)
+Programming Project 2
+CSC 3102 - Dr. Shah
+11/23/19
+ */
+
 package huffman;
 
 import java.io.*;
@@ -13,6 +21,7 @@ public class HuffmanPrint {
         s = new Scanner(f);
     }
 
+    //maps each character to its huffman code
     public void encode(Pair root, String s) throws FileNotFoundException {
 
         if (root.left == null && root.right == null) {
@@ -23,6 +32,7 @@ public class HuffmanPrint {
         encode(root.right, s+"1");
     }
 
+    //prints out huffman encoding of original file to new file called "huffmanoutput.txt"
     public void printCode() throws IOException {
         FileWriter out = new FileWriter(new File("huffmanoutput.txt"));
         char ch;
