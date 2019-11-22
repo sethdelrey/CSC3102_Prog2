@@ -102,5 +102,23 @@ public class Huffman {
             e.printStackTrace();
         }
     }
+
+    public void decode(Pair root) {
+        try {
+            Pair curr = root;
+            char[] line;
+            Scanner fin = new Scanner(new File("huffmanoutput.txt"));
+            while (fin.hasNextLine()) {
+                line = fin.nextLine().toCharArray();
+                for (int i = 0; i < line.length; i++) {
+                    if (line[i] == '0') {
+                        curr = curr.left;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
