@@ -1,9 +1,6 @@
 package huffman;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -96,6 +93,7 @@ public class Huffman {
             HuffmanPrint p = new HuffmanPrint(f);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
             p.encode(root, "");
+            decode(root);
             p.printCode();
 
         } catch (IOException e) {
@@ -103,20 +101,45 @@ public class Huffman {
         }
     }
 
-    public void decode(Pair root) {
+    public static void decode(Pair root) {
         try {
+            FileWriter out = new FileWriter("decodedhuffman.txt");
             Pair curr = root;
-            char[] line;
+//            char[] line;
+            char x;
+            String ans = "";
             Scanner fin = new Scanner(new File("huffmanoutput.txt"));
-            while (fin.hasNextLine()) {
-                line = fin.nextLine().toCharArray();
-                for (int i = 0; i < line.length; i++) {
-                    if (line[i] == '0') {
-                        curr = curr.left;
-                    }
+            fin.useDelimiter("");
+            while (fin.hasNext()) {
+                x = fin.next().charAt(0);
+                if (x == '0')
+                    curr = curr.left;
+                else
+                    curr = curr.right;
+
+                //reached leaf
+                if (curr.left == null && curr.right == null) {
+//                    ans += curr.c;
+                    out.write(curr.c);
+                    curr = root;
                 }
             }
+            out.close();
+
+
+
+//            while (fin.hasNextLine()) {
+//                line = fin.nextLine().toCharArray();
+//                for (int i = 0; i < line.length; i++) {
+//                    if (line[i] == '0') {
+//                        curr = curr.left;
+//                    }
+//                }
+//            }
+
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

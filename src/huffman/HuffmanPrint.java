@@ -29,7 +29,7 @@ public class HuffmanPrint {
         char ch;
         s.useDelimiter("");
         while (s.hasNext()) {
-            ch = s.next().charAt(0);
+            ch = s.next().toLowerCase().charAt(0);
             if (!Character.isLetterOrDigit(ch))
                 ch = ' ';
             out.write(codeMap.get(ch));
