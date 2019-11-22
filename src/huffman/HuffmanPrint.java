@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class HuffmanPrint {
 
     HashMap<Character, String> codeMap = new HashMap<Character, String>();
-//    char[] strArray;
     Scanner s;
 
     HuffmanPrint(File f) throws FileNotFoundException {
@@ -34,9 +33,6 @@ public class HuffmanPrint {
                 ch = ' ';
             out.write(codeMap.get(ch));
         }
-//        for (int i = 0; i<strArray.length; i++) {
-//            out.write(codeMap.get(strArray[i]));
-//        }
         out.close();
     }
 }
