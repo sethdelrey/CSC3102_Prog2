@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.rmi.server.ExportException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,7 +23,7 @@ public class CharFrequency {
 
     public void charCount(File f) throws FileNotFoundException {
         char c;
-        try (BufferedReader br = new BufferedReader(new FileReader(new File("english_50MB.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(new File("huffmaninput.txt")))) {
             String line;
             Scanner s;
             while ((line = br.readLine()) != null) {

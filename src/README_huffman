@@ -1,0 +1,6 @@
+To run this code, name input file "huffmaninput.txt" and place it in the project folder.
+Run the code and the output will generate two separate files titled "huffmanoutput.txt" which is
+the encoded file and "decodedhuffman.txt" which is the decoded huffman code.
+
+Thank you,
+Seth Richard and Raquel Hodgeson
