@@ -36,13 +36,31 @@ public class HuffmanPrint {
     public void printCode() throws IOException {
         FileWriter out = new FileWriter(new File("huffmanoutput.txt"));
         char ch;
-        s.useDelimiter("");
-        while (s.hasNext()) {
-            ch = s.next().toLowerCase().charAt(0);
-            if (!Character.isLetterOrDigit(ch))
-                ch = ' ';
-            out.write(codeMap.get(ch));
+        try (Scanner fin = new Scanner(new File("english"))) {
+            while (fin.hasNextLine()) {
+                String line = fin.nextLine() + "\n";
+                Scanner lineScanner = new Scanner(line);
+                lineScanner.useDelimiter("");
+                while (lineScanner.hasNext()) {
+                    ch = lineScanner.next().toLowerCase().charAt(0);
+                    if (!Character.isLetterOrDigit(ch)) {
+                        out.write(codeMap.get(' '));
+                        if (ch == '\n') {
+                            out.write('\n');
+                        }
+                    } else {
+                        out.write(codeMap.get(ch));
+                    }
+                }
+            }
+            s.useDelimiter("");
+            while (s.hasNext()) {
+                ch = s.next().toLowerCase().charAt(0);
+                if (!Character.isLetterOrDigit(ch))
+                    ch = ' ';
+                out.write(codeMap.get(ch));
+            }
+            out.close();
         }
-        out.close();
     }
 }

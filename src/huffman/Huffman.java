@@ -45,7 +45,8 @@ public class Huffman {
         String str = "";
         try {
             CharFrequency fq = new CharFrequency();
-            File f = new File("huffmaninput");
+//            fq.charCount(str);
+            File f = new File("english");
             fq.charCount(f);
 
             char[] charArray = fq.getCharArray();
