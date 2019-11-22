@@ -2,12 +2,6 @@ package huffman;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * to do:
- * make pairs for each frequency and character in MinHeap so MinHeap is by frequency w/ characters connected
- * figure out messy main method here vvv
- * finish huffman algorithm in HuffmanEncoding class: from Shah ppt 13 last 2 slides
- */
 
 public class CharFrequency {
 
@@ -17,7 +11,8 @@ public class CharFrequency {
 
     public void charCount(String inputString) {
 
-        inputString = inputString.replaceAll("[^a-zA-Z0-9_-]", " ");
+
+        inputString = inputString.replaceAll("[^a-zA-Z0-9]", " ");
         char[] strArray = inputString.toCharArray();
         int i = 0;
 
@@ -27,6 +22,9 @@ public class CharFrequency {
             } else {
                 charCountMap.put(c, 1);
             }
+        }
+        while (s.hasNextChar()) {
+
         }
 
 //        for (Map.Entry entry : charCountMap.entrySet()) {

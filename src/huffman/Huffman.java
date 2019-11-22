@@ -87,6 +87,7 @@ public class Huffman {
                 q.insert(f);
             }
 
+            //decodes file
 
 
             HuffmanPrint p = new HuffmanPrint(strArray);
@@ -98,7 +99,5 @@ public class Huffman {
             e.printStackTrace();
         }
     }
-    public static decode
-
 }
 
