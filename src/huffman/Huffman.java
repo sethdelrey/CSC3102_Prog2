@@ -8,6 +8,7 @@ CSC 3102 - Dr. Shah
 package huffman;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -46,12 +47,14 @@ public class Huffman {
         try {
             CharFrequency fq = new CharFrequency();
 //            fq.charCount(str);
-            File f = new File("english");
+            File f = new File("english_50MB.txt");
             fq.charCount(f);
 
             char[] charArray = fq.getCharArray();
             int[] charFreq = fq.getFreqArray();
             int n = charArray.length;
+
+            System.out.println("Freq Done");
 
             MinHeap q = new MinHeap(n, 2);
 
@@ -66,6 +69,8 @@ public class Huffman {
 
                 q.insert(hn);
             }
+
+            System.out.println("Create Pairs Done");
 
             Pair root = null;
 
@@ -87,15 +92,20 @@ public class Huffman {
                 q.insert(t);
             }
 
+            System.out.println("Heap Done");
+
             HuffmanPrint p = new HuffmanPrint(f);
             HashMap<Character, String> codeMap = new HashMap<Character, String>();
 
             //encodes file and prints it to file "huffmanoutput.txt"
             p.encode(root, "");
 
+
+            p.printCode();
+            System.out.println("Encoded output done");
+
             //prints decoded file to file "decodedhuffman.txt"
             decode(root);
-            p.printCode();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,19 +118,24 @@ public class Huffman {
             FileWriter out = new FileWriter("decodedhuffman.txt");
             Pair curr = root;
             char x;
-            Scanner fin = new Scanner(new File("huffmanoutput.txt"));
-            fin.useDelimiter("");
-            while (fin.hasNext()) {
-                x = fin.next().charAt(0);
-                if (x == '0')
-                    curr = curr.left;
-                else
-                    curr = curr.right;
+            BufferedReader br = new BufferedReader(new FileReader(new File("huffmanoutput.txt")));
+            String line;
+            Scanner fin;
+            while ((line = br.readLine()) != null) {
+                fin = new Scanner(line);
+                fin.useDelimiter("");
+                while (fin.hasNext()) {
+                    x = fin.next().charAt(0);
+                    if (x == '0')
+                        curr = curr.left;
+                    else
+                        curr = curr.right;
 
-                //reached leaf
-                if (curr.left == null && curr.right == null) {
-                    out.write(curr.c);
-                    curr = root;
+                    //reached leaf
+                    if (curr.left == null && curr.right == null) {
+                        out.write(curr.c);
+                        curr = root;
+                    }
                 }
             }
             out.close();

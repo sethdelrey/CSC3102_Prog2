@@ -36,10 +36,12 @@ public class HuffmanPrint {
     public void printCode() throws IOException {
         FileWriter out = new FileWriter(new File("huffmanoutput.txt"));
         char ch;
-        try (Scanner fin = new Scanner(new File("english"))) {
-            while (fin.hasNextLine()) {
-                String line = fin.nextLine() + "\n";
-                Scanner lineScanner = new Scanner(line);
+        try (BufferedReader br = new BufferedReader(new FileReader(new File("english_50MB.txt")))) {
+            String line;
+            Scanner lineScanner;
+            while ((line = br.readLine()) != null) {
+                line += "\n";
+                lineScanner = new Scanner(line);
                 lineScanner.useDelimiter("");
                 while (lineScanner.hasNext()) {
                     ch = lineScanner.next().toLowerCase().charAt(0);
