@@ -1,11 +1,6 @@
-/*
-Raquel Hodgeson (rhodg14@lsu.edu, 89-399-5177)
-Seth Richard (sric111@lsu.edu, 89-053-2395)
-Programming Project 2
-CSC 3102 - Dr. Shah
-11/23/19
- */
 package trie;
+
+import java.io.PrintWriter;
 
 public class LinkedListTrie {
     private class TrieNode {
@@ -110,17 +105,17 @@ public class LinkedListTrie {
             }
         }
 
-        public void display(String str) {
+        public void display(String str, PrintWriter writer) {
             str += lead + label;
             if (isWord) {
-                System.out.println(str);
+                writer.println(str);
             }
             if (firstChild != null) {
-                firstChild.display(str);
+                firstChild.display(str, writer);
             }
             if (rightSibling != null) {
                 str = str.substring(0,str.length()-(1+label.length()));
-                rightSibling.display(str);
+                rightSibling.display(str, writer);
             }
         }
     }
@@ -139,7 +134,7 @@ public class LinkedListTrie {
         size++;
     }
 
-    public void lookup(String prefix) {
+    public void lookup(String prefix, PrintWriter writer) {
         if (prefix != null && !prefix.isEmpty()) {
             char[] prefixAsArray = prefix.toCharArray();
             TrieNode current = root.findChild(prefixAsArray[0]);
@@ -155,7 +150,7 @@ public class LinkedListTrie {
                 }
             }
 
-            current.display(prefix);
+            current.display(prefix, writer);
         }
     }
 }

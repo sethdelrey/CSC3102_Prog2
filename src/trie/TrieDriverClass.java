@@ -2,6 +2,7 @@ package trie;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class TrieDriverClass {
@@ -19,6 +20,24 @@ public class TrieDriverClass {
 //    }
     // HASH TRIE MAIN METHOD
     public static void main(String[] args) {
+        LinkedListTrie linkedListTrie = new LinkedListTrie();
+        try (Scanner fin = new Scanner(new File("input.txt"))) {
+            while (fin.hasNext()) {
+                linkedListTrie.insert(fin.next());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try (Scanner cin = new Scanner(new File("lookup.txt")); PrintWriter writer = new PrintWriter("outputHashTrie.txt")) {
+            while (cin.hasNext()) {
+                linkedListTrie.lookup(cin.next(),writer);
+            }
+        }
+        catch (Exception e) {
+            System.out.print(e.getStackTrace());
+        }
+
         int size = 0;
         try (Scanner fin = new Scanner(new File("input.txt"))) {
             while (fin.hasNext()) {
@@ -39,8 +58,13 @@ public class TrieDriverClass {
             e.printStackTrace();
         }
 
-        trie.lookup("a");
-        //trie.lookup("a");
-
+        try (Scanner cin = new Scanner(new File("lookup.txt")); PrintWriter writer = new PrintWriter("outputHashTrie.txt")) {
+            while (cin.hasNext()) {
+                trie.lookup(cin.next(),writer);
+            }
+        }
+        catch (Exception e) {
+            System.out.print(e.getStackTrace());
+        }
     }
 }
