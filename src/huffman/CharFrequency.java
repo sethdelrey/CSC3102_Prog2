@@ -30,7 +30,7 @@ public class CharFrequency {
         Scanner s = new Scanner(f);
         s.useDelimiter("");
         while (s.hasNext()) {
-            c = s.next().charAt(0);
+            c = s.next().toLowerCase().charAt(0);
             if (!Character.isLetterOrDigit(c))
                 c = ' ';
             if (charCountMap.containsKey(c)) {

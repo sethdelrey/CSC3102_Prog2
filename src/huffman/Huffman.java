@@ -49,7 +49,7 @@ public class Huffman {
 
             CharFrequency fq = new CharFrequency();
 //            fq.charCount(str);
-            File f = new File("huffmaninput");
+            File f = new File("english");
             fq.charCount(f);
 
             char[] charArray = fq.getCharArray();
